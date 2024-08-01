@@ -1,0 +1,102 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "Esta es la documentación de la API para tu proyecto",
+        "contact": {
+            "email": "tu-email@ejemplo.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/process-excel": {
+            "post": {
+                "tags": [
+                    "Excel"
+                ],
+                "summary": "Process an Excel file and export the first 540 columns to a CSV file",
+                "operationId": "4ea2cebd715c7060e7e634d32de4f032",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "path",
+                                    "output"
+                                ],
+                                "properties": {
+                                    "path": {
+                                        "type": "string",
+                                        "example": "/ruta/al/archivo.xlsx"
+                                    },
+                                    "output": {
+                                        "type": "string",
+                                        "example": "/ruta/al/output.csv"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "El archivo Excel ha sido procesado correctamente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "El archivo Excel ha sido procesado correctamente."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Validation error message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Error message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Excel",
+            "description": "Excel"
+        }
+    ]
+}
