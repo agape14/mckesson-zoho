@@ -60,14 +60,25 @@ class ExcelController extends Controller
         $path = $request->input('path');
         $output = $request->input('output');
 
-        // Ejecutar el comando Artisan
+        // Crear un buffer para capturar la salida del comando
+        $buffer = new BufferedOutput();
+
+        // Ejecutar el comando Artisan y capturar la salida
         try {
-            Artisan::call('excel:process', [
+            $exitCode = Artisan::call('excel:process', [
                 'path' => $path,
                 'output' => $output,
-            ]);
+            ], $buffer);
 
-            return response()->json(['message' => 'El archivo Excel ha sido procesado correctamente.'], 200);
+            // Verificar el código de salida
+            if ($exitCode !== 0) {
+                return response()->json(['error' => 'Hubo un problema al procesar el archivo Excel.'], 500);
+            }
+
+            // Capturar la salida del comando
+            $output = $buffer->fetch();
+
+            return response()->json(['message' => 'El archivo Excel ha sido procesado correctamente.', 'output' => $output], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
