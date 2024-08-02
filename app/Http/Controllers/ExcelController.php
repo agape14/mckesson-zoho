@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @OA\Post(
@@ -47,6 +48,7 @@ class ExcelController extends Controller
 {
     public function processExcel(Request $request)
     {
+        //dd($request->all());
         // Validar la solicitud
         $validator = Validator::make($request->all(), [
             'path' => 'required|string',
